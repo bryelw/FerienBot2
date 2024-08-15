@@ -12,7 +12,6 @@ site.login(password)
 
 # Protection templates to remove
 protection_templates = ["pp", "pp-vandalism", "pp-usertalk", "pp-template", "pp-semi", "pp-salt", "pp-semi-protected", "pp-semi-sock", "pp-semi-spambot", "pp-semi-template", "pp-semi-usertalk", "pp-semi-vandalism", "pp-blp", "pp-dispute"]
-protection_templates_str = "|".join(protection_templates)
 
 # Namespaces to check
 ADD_NAMESPACES = [0, 1, 4, 5, 9, 11, 12, 13, 14, 15]
