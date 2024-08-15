@@ -24,9 +24,11 @@ def get_protected_pages():
         protected_pages = set()
         for logevent in logevents:
             page_title = logevent.page().title()
+            print("checking a logevent")
             page = pywikibot.Page(site, page_title)
             if not page.isRedirectPage() and page.exists():
                 protected_pages.add(page_title)
+                print(f"{page.title(as_link=True)} is added to the list")
     except Exception as e:
         print(f"An error occured: {e}")
     return protected_pages
@@ -52,8 +54,10 @@ def check_protected_pages(protected_pages):
     for page_title in protected_pages:
         page = pywikibot.Page(site, page_title)
         if not page.protection():
+            print("the page doesn't have page protection anymore, attempting to remove pp")
             remove_protection_template(page)
         else:
+            print("attempting to add protection template")
             add_protection_template(page)
 
 def get_template_pages():
@@ -76,6 +80,7 @@ def check_template_pages():
     recently_unprotected = get_unprotected_pages()
     for page_title in recently_unprotected:
         page = pywikibot.Page(site, page_title)
+        print("checking recently unprotected")
         remove_protection_template(page)
 
 def add_protection_template(page):
@@ -83,6 +88,7 @@ def add_protection_template(page):
     text = page.text
     for protection_template in protection_templates:
         if re.search(r'{{' + re.escape(protection_template) + r'.*?}}\n*', text):
+            print("Protection template detected in text, not adding another one")
             return
         
     new_text = template + '\n' + text
@@ -111,4 +117,5 @@ while True:
     protected_pages = get_protected_pages()
     check_protected_pages(protected_pages)
     check_template_pages()
+    print("Sleeping for 1 hr.")
     time.sleep(3600)
