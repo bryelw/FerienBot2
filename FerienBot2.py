@@ -50,7 +50,7 @@ def get_unprotected_pages():
 def check_protected_pages(protected_pages):
     for page_title in protected_pages:
         page = pywikibot.Page(site, page_title)
-        if not page.protection():
+        if 'edit' not in page.protection():
             remove_protection_template(page)
         else:
             add_protection_template(page)
